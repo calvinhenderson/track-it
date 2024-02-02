@@ -1,0 +1,73 @@
+name: CI
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  # Runs the mix test suite
+  mix_test:
+    name: mix test (Elixir ${{ matrix.elixir }} - OTP ${{ matrix.otp }})
+
+    env:
+      MIX_ENV: test
+
+    strategy:
+      # Specify the OTP and Elixir versions to use
+      # when building and running the workflow steps.
+      matrix:
+        include:
+        - elixir: 1.15.7
+          otp: 26.1
+          lint: true
+
+    # Set up a PostgreSQL DB service for running tests.
+    services:
+      db:
+        image: postgres:15
+        ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: ${{ matrix.elixir }}
+        otp-version: ${{ matrix.otp }}
+
+    - name: Restore deps and _build cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          deps
+          _build
+        key: deps-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          deps-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}
+
+    - name: Install deps
+      run: mix deps.get --only test
+
+    - name: Remove compiled application files
+      run: mix clean
+
+    - name: Compile & lint dependencies
+      run: mix compile --warnings-as-errors
+      if: ${{ matrix.lint }}
+
+    - name: Check formatting
+      run: mix format --check-formatted
+
+    - name: Run tests
+      run: mix test

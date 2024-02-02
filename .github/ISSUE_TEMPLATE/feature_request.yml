@@ -1,0 +1,17 @@
+name: Feature Request
+description: Suggest an idea
+labels:
+- enhancement
+body:
+- id: description
+  type: textarea
+  validations:
+    required: true
+  attributes:
+    label: Describe the Feature
+    description: Provide details about what you would like to see changed or added to this project.
+- id: additional-info
+  type: textarea
+  attributes:
+    label: Additional Information
+    description: Provide any additional information here.

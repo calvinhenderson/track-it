@@ -1,0 +1,54 @@
+name: Bug Report
+description: Use this template to report a problem.
+labels:
+- bug
+body:
+- id: behaviour
+  type: textarea
+  validations:
+    required: true
+  attributes:
+    label: Describe the Behaviour
+    description: |
+      Describe what happens and what should happen. Provide as much detail as possible.
+- id: steps
+  type: textarea
+  validations:
+    required: true
+  attributes:
+    label: Steps to Reproduce
+    description: |
+      Provide a list of steps necessary to reproduce the issue.
+    placeholder: |
+      1. Clone the `main` branch.
+      2. Execute `echo "hello world"`
+      3. Echo crashes with no output
+- id: app-version
+  type: input
+  validations:
+    required: true
+  attributes:
+    label: Application Version
+    description: Which version of the application are you using?
+- id: runtime-version
+  type: textarea
+  validations:
+    required: true
+  attributes:
+    label: Elixir Version
+    description: Which version of Elixir and OTP are you using?
+    placeholder: |
+      - Elixir: 
+      - OTP:
+- id: platform
+  type: input
+  validations:
+    required: true
+  attributes:
+    label: OS Information
+    description: What operating system are you using? Please be specific.
+- id: additional-info
+  type: textarea
+  attributes:
+    label: Additional Information
+    description: Provide any additional information here.
