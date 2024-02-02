@@ -10,6 +10,7 @@ defmodule TrackIt.Application do
     children = [
       # Starts a worker by calling: TrackIt.Worker.start_link(arg)
       # {TrackIt.Worker, arg}
+      TrackIt.Repo
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
