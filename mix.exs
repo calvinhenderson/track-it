@@ -6,7 +6,9 @@ defmodule TrackIt.MixProject do
       app: :track_it,
       version: "0.1.0",
       elixir: "~> 1.15",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -19,6 +21,10 @@ defmodule TrackIt.MixProject do
     ]
   end
 
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -27,6 +33,16 @@ defmodule TrackIt.MixProject do
       {:ash, "~> 2.18"},
       {:ash_postgres, "~> 1.4"},
       {:ash_authentication, "~> 3.12"}
+    ]
+  end
+
+  # Mix aliases.
+  defp aliases do
+    [
+      setup: ["deps.get", "ecto.setup"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
 end
