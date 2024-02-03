@@ -3,6 +3,9 @@ import Config
 config :track_it,
   ecto_repos: [TrackIt.Repo]
 
+config :track_it,
+  ash_apis: [TrackIt.Accounts]
+
 # Spark formatter configurition
 
 resource_opts = [

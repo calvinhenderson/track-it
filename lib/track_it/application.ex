@@ -10,7 +10,8 @@ defmodule TrackIt.Application do
     children = [
       # Starts a worker by calling: TrackIt.Worker.start_link(arg)
       # {TrackIt.Worker, arg}
-      TrackIt.Repo
+      TrackIt.Repo,
+      {AshAuthentication.Supervisor, otp_app: :track_it}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
