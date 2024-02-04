@@ -10,8 +10,9 @@ config :track_it,
 
 resource_opts = [
   type: Ash.Resource,
-  extensions: [],
+  extensions: [TrackIt.Extensions.Base],
   section_order: [
+    :base,
     :authentication,
     :token,
     :resource,
