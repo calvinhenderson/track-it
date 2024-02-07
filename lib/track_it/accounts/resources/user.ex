@@ -11,6 +11,7 @@ defmodule TrackIt.Accounts.User do
     strategies do
       password :password do
         identity_field :email
+        confirmation_required? false
       end
     end
 
@@ -35,12 +36,13 @@ defmodule TrackIt.Accounts.User do
   end
 
   actions do
-    create :register do
+    create :register_with_password do
       primary? true
 
       accept [:email]
       argument :password, :string, allow_nil?: false, sensitive?: true
 
+      validate TrackIt.Accounts.Validations.Email
       validate TrackIt.Accounts.Validations.Password
 
       change set_context(%{strategy_name: :password})
@@ -51,7 +53,7 @@ defmodule TrackIt.Accounts.User do
 
   code_interface do
     define_for TrackIt.Accounts
-    define :register_with_password, action: :register
+    define :register_with_password, action: :register_with_password
   end
 
   postgres do
