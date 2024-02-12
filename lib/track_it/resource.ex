@@ -21,12 +21,18 @@ defmodule TrackIt.Resource do
     TrackIt.Extensions.Base
   ]
 
+  @default_authorizers [
+    Ash.Policy.Authorizer
+  ]
+
   defmacro __using__(opts) do
+    opts =
+      opts
+      |> Keyword.update(:extensions, @default_extensions, &(@default_extensions ++ &1))
+      |> Keyword.update(:authorizers, @default_authorizers, &(@default_authorizers ++ &1))
+
     quote do
-      use Ash.Resource,
-          unquote(
-            Keyword.update(opts, :extensions, @default_extensions, &(@default_extensions ++ &1))
-          )
+      use Ash.Resource, unquote(opts)
     end
   end
 end

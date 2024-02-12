@@ -25,7 +25,7 @@ defmodule TrackIt.Accounts.UserTest do
     end
   end
 
-  describe "reset_password/1" do
+  describe "reset_password/2" do
     test "resets the user's password when given valid params" do
       original_password = "valid password"
       user = user_fixture(%{password: original_password})
@@ -58,6 +58,19 @@ defmodule TrackIt.Accounts.UserTest do
         })
 
       assert "must contain at least 12 characters" in errors_on(errors).password
+    end
+  end
+
+  describe "sign_in/1" do
+    test "returns a user when given a valid email and password combo" do
+      attrs = valid_user_attrs()
+      %{id: user_id} = user = user_fixture(attrs)
+
+      assert {:ok, %{id: user_id}} =
+               Accounts.User.sign_in(%{
+                 email: attrs.email,
+                 password: attrs.password
+               })
     end
   end
 

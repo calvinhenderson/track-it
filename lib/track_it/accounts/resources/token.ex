@@ -16,9 +16,9 @@ defmodule TrackIt.Accounts.Token do
     repo TrackIt.Repo
   end
 
-  # policies do
-  #   bypass AshAuthentication.Checks.AshAuthenticationInteraction do
-  #     authorize_if always()
-  #   end
-  # end
+  policies do
+    bypass AshAuthentication.Checks.AshAuthenticationInteraction do
+      authorize_if always()
+    end
+  end
 end

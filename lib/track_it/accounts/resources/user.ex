@@ -65,12 +65,15 @@ defmodule TrackIt.Accounts.User do
 
       change AshAuthentication.Strategy.Password.HashPasswordChange
     end
+
+    defaults [:read]
   end
 
   code_interface do
     define_for TrackIt.Accounts
     define :register_with_password, action: :register_with_password
     define :reset_password, action: :reset_password
+    define :sign_in, action: :sign_in_with_password
   end
 
   postgres do
@@ -78,9 +81,9 @@ defmodule TrackIt.Accounts.User do
     repo TrackIt.Repo
   end
 
-  # policies do
-  #   bypass AshAuthentication.Checks.AshAuthenticationInteraction do
-  #     authorize_if always()
-  #   end
-  # end
+  policies do
+    bypass AshAuthentication.Checks.AshAuthenticationInteraction do
+      authorize_if always()
+    end
+  end
 end
