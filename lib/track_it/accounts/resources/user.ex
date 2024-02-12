@@ -49,11 +49,28 @@ defmodule TrackIt.Accounts.User do
       change AshAuthentication.Strategy.Password.HashPasswordChange
       change AshAuthentication.GenerateTokenChange
     end
+
+    update :reset_password do
+      accept []
+
+      argument :old_password, :string, allow_nil?: false, sensitive?: true
+      argument :password, :string, allow_nil?: false, sensitive?: true
+
+      change set_context(%{strategy_name: :password})
+
+      validate TrackIt.Accounts.Validations.Password
+
+      validate {AshAuthentication.Strategy.Password.PasswordValidation,
+                password_argument: :old_password}
+
+      change AshAuthentication.Strategy.Password.HashPasswordChange
+    end
   end
 
   code_interface do
     define_for TrackIt.Accounts
     define :register_with_password, action: :register_with_password
+    define :reset_password, action: :reset_password
   end
 
   postgres do

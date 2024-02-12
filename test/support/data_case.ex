@@ -41,28 +41,28 @@ defmodule TrackIt.DataCase do
   end
 
   @doc """
-  A helper that transforms Ash.Error.Invalid and Ecto.Changeset errors into a map of messages.
+  A helper that transforms Ash.Error.XXX and Ecto.Changeset errors into a map of messages.
 
       assert {:error, changeset} = Accounts.register_user(%{password: "short"})
       assert "password is too short" in errors_on(changeset).password
       assert %{password: ["password is too short"]} = errors_on(changeset)
 
   """
-  def errors_on(%Ash.Error.Invalid{} = ash_error) do
-    ash_error.errors
+  def errors_on(%Ecto.Changeset{} = changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+      Regex.replace(~r"%{(\w+)}", message, fn _, key ->
+        opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+      end)
+    end)
+  end
+
+  def errors_on(%{errors: errors}) do
+    errors
     |> Enum.reduce(%{}, fn %{field: k, message: v}, acc ->
       acc
       |> Map.put_new(k, [])
       |> Map.update(k, [], &[v | &1])
     end)
     |> Map.new()
-  end
-
-  def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
-      Regex.replace(~r"%{(\w+)}", message, fn _, key ->
-        opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
-      end)
-    end)
   end
 end
