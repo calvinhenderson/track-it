@@ -4,7 +4,7 @@ config :track_it,
   ecto_repos: [TrackIt.Repo]
 
 config :track_it,
-  ash_apis: [TrackIt.Accounts]
+  ash_apis: [TrackIt.Accounts, TrackIt.Assets]
 
 # Spark formatter configurition
 

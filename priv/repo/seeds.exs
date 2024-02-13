@@ -9,3 +9,5 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+TrackIt.Accounts.User.register_with_password!(%{email: "test_account@localhost", password: "valid password"})
+TrackIt.Assets.Asset.create!(%{asset_tag: "1234", serial_number: "ABCD123"})
