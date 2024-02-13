@@ -1,21 +1,27 @@
-# TrackIt
+# TrackIt [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/calvinhenderson/track-it/ci.yml?branch=main)](https://github.com/calvinhenderson/track-it/actions?query=branch%3Amain)
 
-**TODO: Add description**
+An app that takes the mess out of tracking your assets. Forget logging equipment
+in convoluted spreadsheets or in a messy notebook. Save yourself the hassle and
+_Track-It!_
 
-## Installation
+> :warning: This app is still considered highly experimental. Use at your own
+risk.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `track_it` to your list of dependencies in `mix.exs`:
 
-```elixir
-def deps do
-  [
-    {:track_it, "~> 0.1.0"}
-  ]
-end
-```
+## Usage
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/track_it>.
+These instructions assume you have a working [Elixir](https://elixir-lang.org)
+toolchain installed and available in your path. If you are already using
+[ASDF](https://asdf-vm.com), you can install the proper toolchain by running
+`asdf install` in the project directory. See [asdf-elixir](https://github.com/asdf-vm/asdf-elixir)
+for instructions on setting up ASDF for Elixir.
 
+1. Start by cloning the repository: `git clone https://calvinhenderson/track-it`
+2. Change directory into the project: `cd track-it`
+3. Download dependencies: `mix deps.get`
+4. Start the project in an interactive shell: `iex -S mix`
+
+
+## Contributing
+
+Please open an [issue](https://github.com/calvinhenderson/track-it/issues/new).
