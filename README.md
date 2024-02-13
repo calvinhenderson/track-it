@@ -24,4 +24,4 @@ for instructions on setting up ASDF for Elixir.
 
 ## Contributing
 
-Please open an [issue](https://github.com/calvinhenderson/track-it/issues/new).
+Please open an [issue](https://github.com/calvinhenderson/track-it/issues).
