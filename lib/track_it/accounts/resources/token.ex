@@ -1,10 +1,10 @@
 defmodule TrackIt.Accounts.Token do
   use TrackIt.Resource,
-    data_layer: AshPostgres.DataLayer,
-    extensions: [AshAuthentication.TokenResource]
-  
+    extensions: [AshAuthentication.TokenResource],
+    data_layer: AshPostgres.DataLayer
+
   base do
-    timestamps? false
+    timestamps?(false)
   end
 
   token do
