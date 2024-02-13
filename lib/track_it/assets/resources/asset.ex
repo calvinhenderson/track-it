@@ -25,11 +25,13 @@ defmodule TrackIt.Assets.Asset do
     update :check_in do
       accept []
       change set_attribute(:user_id, nil)
+      change load(:user)
     end
 
     update :check_out do
       argument :user_id, :uuid, allow_nil?: false
       change manage_relationship(:user_id, :user, type: :append_and_remove)
+      change load(:user)
     end
 
     defaults [:create, :read, :update, :destroy]
@@ -51,6 +53,10 @@ defmodule TrackIt.Assets.Asset do
 
   calculations do
     calculate :is_available, :boolean, expr(user_id == nil)
+  end
+
+  preparations do
+    prepare build(load: [:user])
   end
 
   postgres do
