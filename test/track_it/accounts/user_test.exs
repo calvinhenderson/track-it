@@ -1,5 +1,5 @@
 defmodule TrackIt.Accounts.UserTest do
-  use TrackIt.DataCase
+  use TrackIt.DataCase, async: true
 
   alias TrackIt.Accounts
   import TrackIt.UserFixture
